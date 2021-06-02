@@ -1,3 +1,7 @@
+## [0.0.9] - TODO: Add release date.
+
+- 增加函数功能.
+
 ## [0.0.8] - TODO: Add release date.
 
 - 分拆 iOS 和安卓函数实现.
