@@ -1,3 +1,7 @@
+## [0.0.10] - TODO: Add release date.
+
+- 增加函数功能 1.
+
 ## [0.0.9] - TODO: Add release date.
 
 - 增加函数功能.
