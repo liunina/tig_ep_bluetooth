@@ -8,10 +8,10 @@ import 'package:tig_ep_bluetooth/src/ios_printer_bluetooth.dart';
 import 'package:tig_ep_bluetooth/tig_ep_bluetooth.dart';
 import 'package:tig_ep_utils/tig_ep_utils.dart';
 
-typedef ScanResultsCallback = Future Function(List<PrinterBluetoothLocal>);
-typedef BlueStateCallback = Future Function(int);
+typedef ScanResultsCallback =  Function(List<PrinterBluetoothLocal>);
+typedef BlueStateCallback =  Function(int);
 
-class PrinterBluetoothManger {
+class PrinterBluetoothManager {
   static const int STATE_OFF = 10;
   static const int STATE_TURNING_ON = 11;
 
@@ -21,7 +21,7 @@ class PrinterBluetoothManger {
 
   AbstractPrinterBluetooth _printerBluetooth;
 
-  PrinterBluetoothManger(BlueStateCallback callback) {
+  PrinterBluetoothManager(BlueStateCallback callback) {
     this.callback = callback;
     if (Platform.isAndroid) {
       _printerBluetooth = AndroidPrinterBluetooth((event) {
@@ -32,6 +32,14 @@ class PrinterBluetoothManger {
         callback.call(event);
       });
     }
+  }
+
+  Future<bool> connect(PrinterBluetoothLocal bluetooth){
+    return _printerBluetooth.connect(bluetooth);
+  }
+
+  Future<bool> disconnect(PrinterBluetoothLocal bluetooth){
+    return _printerBluetooth.disconnect(bluetooth);
   }
 
   void startScan(Duration timeout, ScanResultsCallback callback) {

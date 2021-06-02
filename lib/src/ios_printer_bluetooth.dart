@@ -170,4 +170,22 @@ class IosPrinterBluetooth extends AbstractPrinterBluetooth {
 
     return completer.future;
   }
+
+  @override
+  Future<bool> connect(PrinterBluetoothLocal bluetooth) async {
+    BluetoothDevice device = BluetoothDevice();
+    device.name = bluetooth.name;
+    device.address = bluetooth.mac;
+    return await _bluetoothManager.connect(device);
+  }
+
+  @override
+  Future<bool> disconnect(PrinterBluetoothLocal bluetooth) async {
+    return await _bluetoothManager.disconnect();
+  }
+
+  @override
+  Future<bool> isConnected() async {
+   return await _bluetoothManager.isConnected;
+  }
 }

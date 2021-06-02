@@ -1,4 +1,3 @@
-import 'package:flutter/scheduler.dart';
 import 'package:tig_ep_bluetooth/tig_ep_bluetooth.dart';
 import 'package:tig_ep_utils/tig_ep_utils.dart';
 import 'package:flutter/material.dart' hide Image;
@@ -31,13 +30,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<PrinterBluetoothLocal> _devices = [];
-  PrinterBluetoothManger printerBluetoothManger;
+  PrinterBluetoothManager printerBluetoothManger;
+
   @override
   void initState() {
     super.initState();
     _logState();
-    // ignore: missing_return
-    printerBluetoothManger = PrinterBluetoothManger((event) {
+    printerBluetoothManger = PrinterBluetoothManager((event) {
       print("哈哈哈哈哈哈哈哈哈哈111：evern:$event");
     });
   }
@@ -74,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _devices = [];
     });
-    // ignore: missing_return
+
     printerBluetoothManger.startScan(Duration(seconds: 4), (data) {
       setState(() {
         _devices = data.cast<PrinterBluetoothLocal>();
@@ -91,12 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     ticket.text('Bold text', styles: PosStyles(bold: true));
     ticket.text('Reverse text', styles: PosStyles(reverse: true));
-    ticket.text('Underlined text',
-        styles: PosStyles(underline: true), linesAfter: 1);
+    ticket.text('Underlined text', styles: PosStyles(underline: true), linesAfter: 1);
     ticket.text('Align left', styles: PosStyles(align: PosAlign.left));
     ticket.text('Align center', styles: PosStyles(align: PosAlign.center));
-    ticket.text('Align right',
-        styles: PosStyles(align: PosAlign.right), linesAfter: 1);
+    ticket.text('Align right', styles: PosStyles(align: PosAlign.right), linesAfter: 1);
 
     // Print image
     // final ByteData data = await rootBundle.load('assets/logo.png');
@@ -146,23 +143,73 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: EdgeInsets.only(left: 10),
                     alignment: Alignment.centerLeft,
                     child: Row(
-                      children: <Widget>[
-                        Icon(Icons.print),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(_devices[index].name ?? ''),
-                              Text(_devices[index].mac),
-                              Text(
-                                'Click to print a test receipt',
-                                style: TextStyle(color: Colors.grey[700]),
-                              ),
-                            ],
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          _devices[index].name ?? '',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
                           ),
-                        )
+                        ),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () async {
+                                PrinterBluetoothLocal blue = PrinterBluetoothLocal();
+                                blue.name = _devices[index].name ?? "";
+                                blue.mac = _devices[index].mac;
+                                bool ss = await printerBluetoothManger.disconnect(blue);
+                                print("88888888888disconnect :$ss");
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.only(right: 20),
+                                padding: EdgeInsets.only(bottom: 4, top: 4, left: 10, right: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  //设置四周圆角 角度
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                ),
+                                child: Text(
+                                  "移除",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () async {
+                                PrinterBluetoothLocal blue = PrinterBluetoothLocal();
+                                blue.name = _devices[index].name ?? "";
+                                blue.mac = _devices[index].mac;
+                                bool ss = await printerBluetoothManger.connect(blue);
+                                print("88888888888connect :$ss");
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.only(bottom: 4, top: 4, left: 10, right: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  //设置四周圆角 角度
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                ),
+                                child: Text(
+                                  "连接",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
