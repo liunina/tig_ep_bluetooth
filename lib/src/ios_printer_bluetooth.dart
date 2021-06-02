@@ -180,7 +180,7 @@ class IosPrinterBluetooth extends AbstractPrinterBluetooth {
   }
 
   @override
-  Future<bool> disconnect(PrinterBluetoothLocal bluetooth) async {
+  Future<bool> disconnect() async {
     return await _bluetoothManager.disconnect();
   }
 

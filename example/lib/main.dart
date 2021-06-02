@@ -158,10 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             GestureDetector(
                               behavior: HitTestBehavior.opaque,
                               onTap: () async {
-                                PrinterBluetoothLocal blue = PrinterBluetoothLocal();
-                                blue.name = _devices[index].name ?? "";
-                                blue.mac = _devices[index].mac;
-                                bool ss = await printerBluetoothManger.disconnect(blue);
+                                bool ss = await printerBluetoothManger.disconnect();
                                 print("88888888888disconnect :$ss");
                               },
                               child: Container(

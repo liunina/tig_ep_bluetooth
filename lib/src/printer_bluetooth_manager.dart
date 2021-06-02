@@ -38,8 +38,12 @@ class PrinterBluetoothManager {
     return _printerBluetooth.connect(bluetooth);
   }
 
-  Future<bool> disconnect(PrinterBluetoothLocal bluetooth){
-    return _printerBluetooth.disconnect(bluetooth);
+  Future<bool> disconnect(){
+    return _printerBluetooth.disconnect();
+  }
+
+  Future<bool> isConnected(){
+    return _printerBluetooth.isConnected();
   }
 
   void startScan(Duration timeout, ScanResultsCallback callback) {

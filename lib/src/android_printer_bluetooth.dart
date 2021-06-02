@@ -90,7 +90,7 @@ class AndroidPrinterBluetooth extends AbstractPrinterBluetooth {
   }
 
   @override
-  Future<bool> disconnect(PrinterBluetoothLocal bluetooth) async {
+  Future<bool> disconnect() async {
     return await bluetoothPrinter.disconnect().catchError((onError) {
       return false;
     });
