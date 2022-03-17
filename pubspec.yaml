@@ -1,7 +1,7 @@
 name: tig_ep_bluetooth
 description: bluetooth package for ios and android.
-version: 0.0.12
-homepage: http://git.myt11.com/nian.liu/tig_ep_bluetooth
+version: 0.0.13
+homepage: https://github.com/liunina/tig_ep_bluetooth
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
